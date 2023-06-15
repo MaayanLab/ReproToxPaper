@@ -45,14 +45,9 @@ df_chem_meta = pd.read_csv('data/LINCS_small_molecules.tsv', sep='\t', index_col
 df_chem_meta
 
 # %%
-df_idx = pd.read_csv('data/parametric-umap-all-meta.tsv', sep='\t', index_col=0)
-df_idx_chem = df_idx[df_idx['file'] == 'cp_coeff_mat.gctx']
-df_idx_chem['cell'] = df_idx_chem.index.map(lambda id: re.split(r'_', id)[1].split('.')[0])
-df_idx_chem['drug'] = df_idx_chem.index.map(lambda id: re.split(r'_', id)[-2])
-
-# %%
-df_chem_umap = pd.read_csv('data/lincs-umap-2021-08-24-chem-umap.tsv', sep='\t', index_col=0)
-df_chem = pd.merge(left=df_chem_umap, left_index=True, right=df_idx_chem.reset_index(), right_index=True)
+df_chem = pd.read_csv('input/2021-08-24-chem-umap.tsv.gz', sep='\t', index_col=0)
+df_chem['cell'] = df_chem.index.map(lambda id: re.split(r'_', id)[1].split('.')[0])
+df_chem['drug'] = df_chem.index.map(lambda id: re.split(r'_', id)[-2])
 df_chem
 
 # %%

@@ -3,10 +3,15 @@
 pip-install:
 	pip install -r requirements.txt
 
+
 # provided
 
 # this was extracted from ChEMBL 30 https://chembl.gitbook.io/chembl-interface-documentation/downloads
 input/chembl_drugs.json:
+
+# this file maps L1000 chemical signatures to UMAP-coordinates and is from https://maayanlab.cloud/sigcom-lincs/#/UMAPs
+input/2021-08-24-chem-umap.tsv.gz:
+
 
 # pure downloads
 
@@ -29,11 +34,8 @@ data/L1000_2021_drug_similarity.npz:
 data/drugbank-full-database.xml:
 	echo "You must download this from https://go.drugbank.com/releases/latest"
 
-# pre-processing
 
-# TODO: this comes from sigcom lincs umap code
-data/parametric-umap-all-meta.tsv:
-data/lincs-umap-2021-08-24-chem-umap.tsv:
+# actual code for figures
 
 data/drugs-com.tsv:
 	python 2022-09-09-drugs-com-crawl.py $@
@@ -77,7 +79,7 @@ data/2023-04-25-D-X-mapped.tsv: 2023-04-25-id-mapping
 data/2023-04-25-drugs-com.tsv: 2023-04-25-id-mapping
 
 .PHONY: 2022-08-30-pregnancy-drug-preds
-2022-08-30-pregnancy-drug-preds: 2022-08-30-pregnancy-drug-preds.py input/pregnancy_category_D_and_X_v2.xlsx input/Placenta_Barrier.xlsx data/LINCS_small_molecules.tsv data/parametric-umap-all-meta.tsv data/lincs-umap-2021-08-24-chem-umap.tsv data/DrugRepurposingHub_moa_drugsetlibrary_name.dmt
+2022-08-30-pregnancy-drug-preds: 2022-08-30-pregnancy-drug-preds.py input/pregnancy_category_D_and_X_v2.xlsx input/Placenta_Barrier.xlsx data/LINCS_small_molecules.tsv input/2021-08-24-chem-umap.tsv.gz data/DrugRepurposingHub_moa_drugsetlibrary_name.dmt
 	python $<
 
 .PHONY: 2023-04-28-benchmark
