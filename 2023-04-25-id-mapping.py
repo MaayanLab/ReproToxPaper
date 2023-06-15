@@ -158,7 +158,7 @@ coexpression_matrix_index = coexpression_matrix['index'][:]
 lincs_drug_metadata = pd.read_csv('data/Drugs_metadata.csv', index_col=0)
 lincs_sm_meta = pd.read_csv('data/LINCS_small_molecules.tsv', sep='\t', index_col=0)
 drugbank_synonyms = read_gmt_dict('data/drugbank_drug_synonyms.dmt')
-with open('data/chembl_drugs.json', 'r') as fr:
+with open('input/chembl_drugs.json', 'r') as fr:
     chembl_drugs = json.load(fr)
 
 # %%

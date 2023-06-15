@@ -3,6 +3,11 @@
 pip-install:
 	pip install -r requirements.txt
 
+# provided
+
+# this was extracted from ChEMBL 30 https://chembl.gitbook.io/chembl-interface-documentation/downloads
+input/chembl_drugs.json:
+
 # pure downloads
 
 # more information about this: https://doi.org/10.1093/database/baab017
@@ -25,9 +30,6 @@ data/drugbank-full-database.xml:
 	echo "You must download this from https://go.drugbank.com/releases/latest"
 
 # pre-processing
-
-# TODO: these come from processing drugbank/chembl attrs
-data/chembl_drugs.json:
 
 # TODO: this comes from sigcom lincs umap code
 data/parametric-umap-all-meta.tsv:
@@ -56,7 +58,7 @@ data/drugshot_drugrif_enzyme_drugbank.tsv: 2022-05-16-dmt-prep-drugbank
 data/drugshot_drugrif_transporter_drugbank.tsv: 2022-05-16-dmt-prep-drugbank
 
 .PHONY: 2022-11-11-all-rdkit-features
-2022-11-11-all-rdkit-features: 2022-11-11-all-rdkit-features.py data/L1000_2021_drug_similarity.npz data/LINCS_small_molecules.tsv data/drugbank_drug_synonyms.dmt data/drugbank_enzyme.dmt data/drugbank_transporter.dmt data/drugshot_autorif_enzyme_drugbank.tsv data/drugshot_autorif_transporter_drugbank.tsv data/drugshot_drugrif_enzyme_drugbank.tsv data/drugshot_drugrif_transporter_drugbank.tsv data/chembl_drugs.json
+2022-11-11-all-rdkit-features: 2022-11-11-all-rdkit-features.py data/L1000_2021_drug_similarity.npz data/LINCS_small_molecules.tsv data/drugbank_drug_synonyms.dmt data/drugbank_enzyme.dmt data/drugbank_transporter.dmt data/drugshot_autorif_enzyme_drugbank.tsv data/drugshot_autorif_transporter_drugbank.tsv data/drugshot_drugrif_enzyme_drugbank.tsv data/drugshot_drugrif_transporter_drugbank.tsv input/chembl_drugs.json
 	python $<
 
 .PHONY: 2022-11-28-more-features
@@ -67,7 +69,7 @@ data/drug_attribute_mats.h5: 2022-11-28-more-features
 data/2022-08-29-drug_synonmys.dmt: 2022-11-28-more-features
 
 .PHONY: 2023-04-25-id-mapping
-2023-04-25-id-mapping: 2023-04-25-id-mapping.py input/pregnancy_category_D_and_X_v2.xlsx data/L1000_2021_drug_similarity.npz data/Drugs_metadata.csv data/LINCS_small_molecules.tsv data/drugbank_drug_synonyms.dmt data/chembl_drugs.json data/drugs-com.tsv
+2023-04-25-id-mapping: 2023-04-25-id-mapping.py input/pregnancy_category_D_and_X_v2.xlsx data/L1000_2021_drug_similarity.npz data/Drugs_metadata.csv data/LINCS_small_molecules.tsv data/drugbank_drug_synonyms.dmt input/chembl_drugs.json data/drugs-com.tsv
 	python $<
 
 data/2023-04-25-placenta-mapped.tsv: 2023-04-25-id-mapping

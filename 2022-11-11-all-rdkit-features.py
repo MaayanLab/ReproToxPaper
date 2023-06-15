@@ -123,7 +123,7 @@ drugshot_drugrif_enzyme_drugbank = pd.read_csv('data/drugshot_drugrif_enzyme_dru
 drugshot_drugrif_transporter_drugbank = pd.read_csv('data/drugshot_drugrif_transporter_drugbank.tsv', sep='\t', index_col=0)
 chembl_drugs = {
     drug['chemblId']: drug
-    for drug in json.load(Path('data/chembl_drugs.json').open('r'))
+    for drug in json.load(Path('input/chembl_drugs.json').open('r'))
 }
 
 # %%
