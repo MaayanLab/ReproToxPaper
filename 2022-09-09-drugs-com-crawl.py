@@ -121,8 +121,6 @@ df['us-cleaned'] = df.us.str.strip(r'[ \.]').str.upper().replace({
 })
 df['us-cleaned'].value_counts()
 
-if __name__ == '__main__':
-  assert sys.argv[1].endswith('.tsv')
-  df.rename_axis('url').reset_index().set_index('drug')[[
-    'us-cleaned', 'au-cleaned', 'us', 'au', 'url'
-  ]].to_csv(sys.argv[1], sep='\t')
+df.rename_axis('url').reset_index().set_index('drug')[[
+  'us-cleaned', 'au-cleaned', 'us', 'au', 'url'
+]].to_csv('data/drugs-com.tsv', sep='\t')

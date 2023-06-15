@@ -37,10 +37,11 @@ data/drugbank-full-database.xml:
 
 # actual code for figures
 
-data/drugs-com.tsv:
-	python 2022-09-09-drugs-com-crawl.py $@
+.PHONY: 2022-09-09-drugs-com-crawl
+2022-09-09-drugs-com-crawl: 2022-09-09-drugs-com-crawl.py
+	python $<
 
-# actual code for figures
+2022-09-09-drugs-com-crawl: data/drugs-com.tsv
 
 .PHONY: 2022-05-16-drugbank
 2022-05-16-drugbank: 2022-05-16-drugbank.py data/drugbank-full-database.xml
