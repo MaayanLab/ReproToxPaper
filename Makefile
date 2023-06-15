@@ -27,9 +27,12 @@ data/L1000_2021_drug_similarity.npz:
 data/drugbank_drug_synonyms.dmt:
 data/chembl_drugs.json:
 data/2022-08-29-drug_synonmys.dmt:
-
-# TODO: this comes from some rdkit processing
-data/drug_attribute_mats.h5:
+data/drugbank_enzyme.dmt:
+data/drugbank_transporter.dmt:
+data/drugshot_autorif_enzyme_drugbank.tsv:
+data/drugshot_autorif_transporter_drugbank.tsv:
+data/drugshot_drugrif_enzyme_drugbank.tsv:
+data/drugshot_drugrif_transporter_drugbank.tsv:
 
 # TODO: this comes from sigcom lincs umap code
 data/parametric-umap-all-meta.tsv:
@@ -39,6 +42,16 @@ data/drugs-com.tsv:
 	python 2022-09-09-drugs-com-crawl.py $@
 
 # actual code for figures
+
+.PHONY: 2022-11-11-all-rdkit-features
+2022-11-11-all-rdkit-features: 2022-11-11-all-rdkit-features.py data/L1000_2021_drug_similarity.npz data/LINCS_small_molecules.tsv data/drugbank_drug_synonyms.dmt data/drugbank_enzyme.dmt data/drugbank_transporter.dmt data/drugshot_autorif_enzyme_drugbank.tsv data/drugshot_autorif_transporter_drugbank.tsv data/drugshot_drugrif_enzyme_drugbank.tsv data/drugshot_drugrif_transporter_drugbank.tsv data/chembl_drugs.json
+	python $<
+
+.PHONY: 2022-11-28-more-features
+2022-11-28-more-features: 2022-11-28-more-features.py 2022-11-11-all-rdkit-features
+	python $<
+
+data/drug_attribute_mats.h5: 2022-11-28-more-features
 
 .PHONY: 2023-04-25-id-mapping
 2023-04-25-id-mapping: 2023-04-25-id-mapping.py input/pregnancy_category_D_and_X_v2.xlsx data/L1000_2021_drug_similarity.npz data/Drugs_metadata.csv data/LINCS_small_molecules.tsv data/drugbank_drug_synonyms.dmt data/chembl_drugs.json data/drugs-com.tsv
