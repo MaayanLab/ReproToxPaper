@@ -52,6 +52,7 @@ data/drugs-com.tsv:
 	python $<
 
 data/drug_attribute_mats.h5: 2022-11-28-more-features
+data/2022-08-29-drug_synonmys.dmt: 2022-11-28-more-features
 
 .PHONY: 2023-04-25-id-mapping
 2023-04-25-id-mapping: 2023-04-25-id-mapping.py input/pregnancy_category_D_and_X_v2.xlsx data/L1000_2021_drug_similarity.npz data/Drugs_metadata.csv data/LINCS_small_molecules.tsv data/drugbank_drug_synonyms.dmt data/chembl_drugs.json data/drugs-com.tsv

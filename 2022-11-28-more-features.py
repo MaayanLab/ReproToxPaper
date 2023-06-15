@@ -41,6 +41,12 @@ drug_syn = {
   for V in groups.values()
 }
 
+# %%
+with open('data/2022-08-29-drug_synonmys.dmt', 'w') as fw:
+  for drug, synonyms in drug_syn.items():
+    if len(synonyms) <= 1: continue
+    print(drug, '', *{syn for syn in synonyms if syn != drug}, sep='\t', file=fw)
+
 #%%
 all_features_reduced_idf = all_features_reduced/ all_features_reduced.sum()
 all_features_reduced_idf
