@@ -1,0 +1,14 @@
+beautifulsoup4
+glasbey
+hdbscan
+maayanlab_bioinformatics
+matplotlib
+numpy
+pandas
+rdkit
+requests
+scipy
+supervenn
+tensorflow
+tensorflow_addons
+tqdm
