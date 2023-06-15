@@ -22,3 +22,6 @@ make fig-4
 
 ## Figure 5
 Figure 5 is a screenshot from the [ReproToxKG Website](https://maayanlab.cloud/reprotox-kg).
+
+## Figure 6
+Figure 6 was made using [Cytoscape Desktop](https://cytoscape.org/), [input/fig6.cys](./input/fig6.cys) is provided to view this network.
