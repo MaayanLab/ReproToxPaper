@@ -21,18 +21,13 @@ data/LINCS_small_molecules.tsv:
 data/L1000_2021_drug_similarity.npz:
 	curl -L https://appyters.maayanlab.cloud/storage/DrugShot/L1000_2021_drug_similarity.npz -o $@
 
+data/drugbank-full-database.xml:
+	echo "You must download this from https://go.drugbank.com/releases/latest"
+
 # pre-processing
 
 # TODO: these come from processing drugbank/chembl attrs
-data/drugbank_drug_synonyms.dmt:
 data/chembl_drugs.json:
-data/2022-08-29-drug_synonmys.dmt:
-data/drugbank_enzyme.dmt:
-data/drugbank_transporter.dmt:
-data/drugshot_autorif_enzyme_drugbank.tsv:
-data/drugshot_autorif_transporter_drugbank.tsv:
-data/drugshot_drugrif_enzyme_drugbank.tsv:
-data/drugshot_drugrif_transporter_drugbank.tsv:
 
 # TODO: this comes from sigcom lincs umap code
 data/parametric-umap-all-meta.tsv:
@@ -42,6 +37,23 @@ data/drugs-com.tsv:
 	python 2022-09-09-drugs-com-crawl.py $@
 
 # actual code for figures
+
+.PHONY: 2022-05-16-drugbank
+2022-05-16-drugbank: 2022-05-16-drugbank.py data/drugbank-full-database.xml
+	python $<
+
+data/drugbank_enzyme.dmt: 2022-05-16-drugbank
+data/drugbank_transporter.dmt: 2022-05-16-drugbank
+data/drugbank_drug_synonyms.dmt: 2022-05-16-drugbank
+
+.PHONY: 2022-05-16-dmt-prep-drugbank
+2022-05-16-dmt-prep-drugbank: 2022-05-16-dmt-prep-drugbank.py data/drugbank_enzyme.dmt data/drugbank_transporter.dmt data/drugbank_drug_synonyms.dmt
+	python $<
+
+data/drugshot_autorif_enzyme_drugbank.tsv: 2022-05-16-dmt-prep-drugbank
+data/drugshot_autorif_transporter_drugbank.tsv: 2022-05-16-dmt-prep-drugbank
+data/drugshot_drugrif_enzyme_drugbank.tsv: 2022-05-16-dmt-prep-drugbank
+data/drugshot_drugrif_transporter_drugbank.tsv: 2022-05-16-dmt-prep-drugbank
 
 .PHONY: 2022-11-11-all-rdkit-features
 2022-11-11-all-rdkit-features: 2022-11-11-all-rdkit-features.py data/L1000_2021_drug_similarity.npz data/LINCS_small_molecules.tsv data/drugbank_drug_synonyms.dmt data/drugbank_enzyme.dmt data/drugbank_transporter.dmt data/drugshot_autorif_enzyme_drugbank.tsv data/drugshot_autorif_transporter_drugbank.tsv data/drugshot_drugrif_enzyme_drugbank.tsv data/drugshot_drugrif_transporter_drugbank.tsv data/chembl_drugs.json
