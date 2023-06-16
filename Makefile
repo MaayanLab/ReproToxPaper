@@ -10,7 +10,7 @@ pip-install:
 input/chembl_drugs.json:
 
 # this file maps L1000 chemical signatures to UMAP-coordinates and is from https://maayanlab.cloud/sigcom-lincs/#/UMAPs
-input/2021-08-24-chem-umap.tsv.gz:
+input/2021-08-30-chem-umap.tsv.gz:
 
 
 # pure downloads
@@ -23,9 +23,15 @@ data/DrugRepurposingHub_moa_drugsetlibrary_name.dmt:
 data/Drugs_metadata.csv:
 	curl -L https://maayanlab.cloud/L1000FWD/download/Drugs_metadata.csv -o $@
 
+data/Probes_L1000_metadata.csv:
+	curl -L https://maayanlab.cloud/l1000fwd/download/Probes_L1000_metadata.csv -o $@
+
 # more information about this: https://doi.org/10.1093/nar/gkac328
 data/LINCS_small_molecules.tsv:
 	curl -L https://s3.amazonaws.com/lincs-dcic/sigcom-lincs-metadata/LINCS_small_molecules.tsv -o $@
+
+data/cp_coeff_mat.gctx:
+	curl -L https://lincs-dcic.s3.amazonaws.com/LINCS-sigs-2021/gctx/cd-coefficient/cp_coeff_mat.gctx -o $@
 
 # more information about this: https://doi.org/10.1186%2Fs12859-022-04590-5
 data/L1000_2021_drug_similarity.npz:
@@ -36,6 +42,16 @@ data/drugbank-full-database.xml:
 
 
 # actual code for figures
+
+.PHONY: 2021-08-30-ldp3-figures
+2021-08-30-ldp3-figures: 2021-08-30-ldp3-figures.ipynb data/Probes_L1000_metadata.csv data/cp_coeff_mat.gctx
+	python $<
+
+# NOTE: this file is linked from `input` since it requires much computational resources
+#  to produce but you can swap the two statements below to produce it instead
+# data/2021-08-30-chem-umap.tsv.gz: 2021-08-30-ldp3-figures
+data/2021-08-30-chem-umap.tsv.gz: input/2021-08-30-chem-umap.tsv.gz
+	ln -s data/2021-08-30-chem-umap.tsv.gz input/2021-08-30-chem-umap.tsv.gz
 
 .PHONY: 2022-09-09-drugs-com-crawl
 2022-09-09-drugs-com-crawl: 2022-09-09-drugs-com-crawl.py
@@ -80,7 +96,7 @@ data/2023-04-25-D-X-mapped.tsv: 2023-04-25-id-mapping
 data/2023-04-25-drugs-com.tsv: 2023-04-25-id-mapping
 
 .PHONY: 2022-08-30-pregnancy-drug-preds
-2022-08-30-pregnancy-drug-preds: 2022-08-30-pregnancy-drug-preds.py input/pregnancy_category_D_and_X_v2.xlsx input/Placenta_Barrier.xlsx data/LINCS_small_molecules.tsv input/2021-08-24-chem-umap.tsv.gz data/DrugRepurposingHub_moa_drugsetlibrary_name.dmt
+2022-08-30-pregnancy-drug-preds: 2022-08-30-pregnancy-drug-preds.py input/pregnancy_category_D_and_X_v2.xlsx input/Placenta_Barrier.xlsx data/LINCS_small_molecules.tsv data/2021-08-30-chem-umap.tsv.gz data/DrugRepurposingHub_moa_drugsetlibrary_name.dmt
 	python $<
 
 .PHONY: 2023-04-28-benchmark

@@ -45,7 +45,7 @@ df_chem_meta = pd.read_csv('data/LINCS_small_molecules.tsv', sep='\t', index_col
 df_chem_meta
 
 # %%
-df_chem = pd.read_csv('input/2021-08-24-chem-umap.tsv.gz', sep='\t', index_col=0)
+df_chem = pd.read_csv('data/2021-08-30-chem-umap.tsv.gz', sep='\t', index_col=0)
 df_chem['cell'] = df_chem.index.map(lambda id: re.split(r'_', id)[1].split('.')[0])
 df_chem['drug'] = df_chem.index.map(lambda id: re.split(r'_', id)[-2])
 df_chem
