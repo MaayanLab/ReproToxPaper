@@ -36,5 +36,5 @@ for k, v in mapped_drug_sets.items():
         labels.append(k)
 plt.figure(figsize=(16, 8))
 supervenn(sets, labels, sets_ordering= 'minimize gaps', widths_minmax_ratio=0.1 )
-plt.savefig("supervenn.png", dpi=500)
-plt.savefig("supervenn.svg", dpi=500)
+plt.savefig("data/fig-s1.png", dpi=500)
+plt.savefig("data/fig-s1.svg", dpi=500)

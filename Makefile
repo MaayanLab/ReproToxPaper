@@ -115,5 +115,9 @@ fig-3: 2022-08-30-pregnancy-drug-preds
 fig-4: 2023-04-28-benchmark
 
 # TODO
+
+2023-02-07-supervenn: 2023-02-07-supervenn.py data/resources.dmt
+	python $<
+
 .PHONY: fig-s1
 fig-s1: 2023-02-07-supervenn
