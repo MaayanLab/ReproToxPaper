@@ -1,7 +1,7 @@
 beautifulsoup4
 glasbey
 hdbscan
-maayanlab_bioinformatics
+git+https://github.com/Maayanlab/maayanlab-bioinformatics.git
 matplotlib
 numpy
 pandas
@@ -13,3 +13,4 @@ supervenn
 tensorflow
 tensorflow_addons
 tqdm
+supervenn
