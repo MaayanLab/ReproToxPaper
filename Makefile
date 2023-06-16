@@ -105,6 +105,7 @@ data/2023-04-25-drugs-com.tsv: 2023-04-25-id-mapping
 2023-04-28-benchmark: 2023-04-28-benchmark.py data/L1000_2021_drug_similarity.npz
 	python $<
 
+.PHONY: 2023-02-07-supervenn
 2023-02-07-supervenn: 2023-02-07-supervenn.py data/resources.dmt
 	python $<
 
