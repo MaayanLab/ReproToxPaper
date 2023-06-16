@@ -105,6 +105,9 @@ data/2023-04-25-drugs-com.tsv: 2023-04-25-id-mapping
 2023-04-28-benchmark: 2023-04-28-benchmark.py data/L1000_2021_drug_similarity.npz
 	python $<
 
+2023-02-07-supervenn: 2023-02-07-supervenn.py data/resources.dmt
+	python $<
+
 .PHONY: fig-2
 fig-2: 2023-04-25-id-mapping
 
@@ -113,11 +116,6 @@ fig-3: 2022-08-30-pregnancy-drug-preds
 
 .PHONY: fig-4
 fig-4: 2023-04-28-benchmark
-
-# TODO
-
-2023-02-07-supervenn: 2023-02-07-supervenn.py data/resources.dmt
-	python $<
 
 .PHONY: fig-s1
 fig-s1: 2023-02-07-supervenn

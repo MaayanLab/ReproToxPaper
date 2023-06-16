@@ -18,6 +18,7 @@ Figure 1 is a manually created graphic, as such there is no code.
 make fig-2
 make fig-3
 make fig-4
+make fig-s1
 ```
 
 ## Figure 5
