@@ -51,3 +51,55 @@ generic_drugs = set(itertools.chain.from_iterable(generic_drugs))
 # built DMT for NBDR drugs
 with open('data/NBDR_All_Drugs_Generic.dmt', 'w') as f_out: 
   f_out.write('NBDR\t\t' + '\t'.join(generic_drugs))
+
+## FAERS
+
+url = "https://s3.amazonaws.com/maayan-kg/reprotox/drugsto_faers_male.valid.json"
+res = requests.get(url)
+serialization = res.json()
+
+drug_sets = {}
+for i in serialization["edges"]:
+    bd = i["properties"]["target_label"]
+    dr = i["properties"]["source_label"]
+    label = "%s male"%bd 
+    if label not in drug_sets:
+        drug_sets[label] = set()
+    drug_sets[label].add(dr)
+
+url = "https://s3.amazonaws.com/maayan-kg/reprotox/drugsto_faers_female.valid.json"
+res = requests.get(url)
+serialization = res.json()
+
+for i in serialization["edges"]:
+    bd = i["properties"]["target_label"]
+    dr = i["properties"]["source_label"]
+    label = "%s female"%bd 
+    if label not in drug_sets:
+        drug_sets[label] = set()
+    drug_sets[label].add(dr)
+
+
+with open("data/FAERS.dmt", 'w') as o:
+    for k,v in drug_sets.items():
+        row = [k, ''] + list(v)
+        o.write("\t".join(row))
+        o.write("\n")
+
+res = requests.get("https://s3.amazonaws.com/maayan-kg/reprotox/idg_drug_targets.valid.json")
+serialization = res.json()
+
+drug_sets = {}
+for i in serialization["edges"]:
+    target = i["properties"]["target_label"]
+    dr = i["properties"]["source_label"]
+    label = target
+    if label not in drug_sets:
+        drug_sets[label] = set()
+    drug_sets[label].add(dr)
+
+with open("data/DrugCentral_Targets.dmt", 'w') as o:
+    for k,v in drug_sets.items():
+        row = [k, ''] + list(v)
+        o.write("\t".join(row))
+        o.write("\n")
