@@ -12,6 +12,15 @@ input/chembl_drugs.json:
 # this file maps L1000 chemical signatures to UMAP-coordinates and is from https://maayanlab.cloud/sigcom-lincs/#/UMAPs
 input/2021-08-30-chem-umap.tsv.gz:
 
+# manually identified FDA Category D and X drugs from Drugs.com (06-21-2022)
+input/FDApreg_Category_D.tsv:
+
+input/FDApreg_Category_X.tsv:
+
+# manually compiled maternal exposures from the National Birth Defect Registry https://birthdefects.org/maternal-exposures-report-in-5060-registry-cases/
+input/SBD_maternalExpo_BDorg_OTC.tsv:
+
+input/SBD_maternalExpo_BDorg_prescription.tsv:
 
 # pure downloads
 
@@ -39,6 +48,11 @@ data/L1000_2021_drug_similarity.npz:
 
 data/drugbank-full-database.xml:
 	echo "You must download this from https://go.drugbank.com/releases/latest"
+
+# drugs associated with birth defects from CDC, queried from DrugShot
+# more information about DrugShot: https://doi.org/10.1186/s12859-022-04590-5
+data/Drugshot_Drugs.dmt:
+	curl -L https://raw.githubusercontent.com/nih-cfde/ReproToxTables/main/CDC-birth-defects/drugshot_birth_defects.gmt -o $@
 
 data/resources.dmt:
 	curl -L https://s3.amazonaws.com/maayan-kg/reprotox/dmt/resources.dmt -o $@
@@ -104,6 +118,13 @@ data/2023-04-25-drugs-com.tsv: 2023-04-25-id-mapping
 .PHONY: 2023-04-28-benchmark
 2023-04-28-benchmark: 2023-04-28-benchmark.py data/L1000_2021_drug_similarity.npz
 	python $<
+
+.PHONY: 2023-01-17-fda-nbdr-dmt
+2023-01-17-fda-dmt: 2023-01-17-build-fda-nbdr-dmt.py input/FDApreg_Category_D.tsv input/FDApreg_Category_X.tsv input/SBD_maternalExpo_BDorg_OTC.tsv input/SBD_maternalExpo_BDorg_prescription.tsv
+	python $<
+
+data/FDA_drugs.dmt: 2023-01-17-fda-nbdr-dmt
+data/NBDR_All_Drugs_Generic.dmt: 2023-01-17-fda-nbdr-dmt
 
 .PHONY: 2023-02-07-supervenn
 2023-02-07-supervenn: 2023-02-07-supervenn.py data/resources.dmt
