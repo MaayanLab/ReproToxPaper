@@ -34,6 +34,8 @@ data/L1000_2021_drug_similarity.npz:
 data/drugbank-full-database.xml:
 	echo "You must download this from https://go.drugbank.com/releases/latest"
 
+data/resources.dmt:
+	curl -L https://s3.amazonaws.com/maayan-kg/reprotox/dmt/resources.dmt -o $@
 
 # actual code for figures
 
@@ -98,4 +100,4 @@ fig-4: 2023-04-28-benchmark
 
 # TODO
 .PHONY: fig-s1
-fig-s1:
+fig-s1: 2023-02-07-supervenn
